@@ -1,1 +1,18 @@
-This repository is to test all the projects.
+This repository is to test all the projects, this page will list all the ongoing and completed projects.
+
+Open Projects:
+--------------
+=> Oracle DBA bau tasks using ansible playbooks.
+
+
+
+
+
+
+
+
+
+
+
+Completed Projects:
+-------------------
