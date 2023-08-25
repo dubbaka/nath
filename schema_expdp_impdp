@@ -1,0 +1,142 @@
+
+Step 1.
+
+Login to database server.
+
+set environment and connect database as sysdba.
+
+
+Step 2.
+
+# First Get the DIRECTORY_NAME from below query, where you want to store export file.
+
+col OWNER for a20
+col DIRECTORY_NAME for a20
+col DIRECTORY_PATH for a72
+set linesize 250
+select * from dba_directories;
+
+OWNER                DIRECTORY_NAME       DIRECTORY_PATH                                                           ORIGIN_CON_ID
+-------------------- -------------------- ------------------------------------------------------------------------ -------------
+SYS                  FTS                  /acfs02/oracle/refresh/FTS                                                           5
+
+Step 3.
+
+# Create a export par file with details as required, this is for estimate only to know how much disk space is needed.
+
+vi ESTIMATE_SCHEMA_EXP.par
+DIRECTORY=FTS
+LOGFILE=ESTIMATE_SCHEMA_EXP.log
+PARALLEL=1
+SCHEMAS=DI_APP_USER
+ESTIMATE_ONLY=Y
+
+Here, if you need multiple schemas, then add them as SCHEMAS=SCHEMA1,SCHEMA2,SCHEMA3
+
+Step 4.
+
+# Execute expdp command using above export par file.
+
+expdp userid=\'/ as sysdba\' parfile=ESTIMATE_SCHEMA_EXP.par
+
+EXPORT ESTIMATE OUTPUT:
+expdp userid=\'/ as sysdba\' parfile=ESTIMATE_SCHEMA_EXP.par
+
+Export: Release 19.0.0.0.0 - Production on Fri Aug 25 10:21:00 2023
+Version 19.19.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+Connected to: Oracle Database 19c EE Extreme Perf Release 19.0.0.0.0 - Production
+Starting "SYS"."SYS_EXPORT_SCHEMA_01":  userid="/******** AS SYSDBA" parfile=ESTIMATE_SCHEMA_EXP.par
+Estimate in progress using BLOCKS method...
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+.  estimated "DI_APP_USER"."DI_PURGE_LOG_STG_BACKLOG"      723 MB
+.  estimated "DI_APP_USER"."DI_DB_PURGE_SELECTION"         108 MB
+.  estimated "DI_APP_USER"."ORDR_PLCMT_MIGR_TABLE"          59 MB
+.  estimated "DI_APP_USER"."DI_TPA_TRANSACTION_STG_BKUP"     57 MB
+.  estimated "DI_APP_USER"."ORDER_MIGR_BS_OT_CUR_TABLE"     44 MB
+.  estimated "DI_APP_USER"."DI_DB_PURGE_SELECTION_TEMP"     39 MB
+.  estimated "DI_APP_USER"."TRD_MIGR_ENTRY_TS_TABLE"        36 MB
+.  estimated "DI_APP_USER"."ORDER_MIGR_ORDR_LMT_PRC_TABLE"     24 MB
+.  estimated "DI_APP_USER"."ORDER_MIGR_ORDR_BAL_TABLE"      20 MB
+.  estimated "DI_APP_USER"."ORDER_MIGR_ORDR_TYP_TABLE"      18 MB
+.  estimated "DI_APP_USER"."TXN_CORP_MIGR_SUPPORT_TABLE"     10 MB
+.  estimated "DI_APP_USER"."TRD_MIGR_10B_SUPPORT_TABLE"      7 MB
+.  estimated "DI_APP_USER"."FILLS_MIGR_ENTRY_TS_TABLE"       5 MB
+.  estimated "DI_APP_USER"."ORDR_MIGR_PLCMT_TS_TABLE"        3 MB
+.  estimated "DI_APP_USER"."CORP_MIGR_TO_STG_SPRT_TABLE"   1024 KB
+.  estimated "DI_APP_USER"."DI_MIFID_TEMP_REPORT"         1024 KB
+.  estimated "DI_APP_USER"."MIGRATION_ERROR_TABLE_TEMP"   1024 KB
+.  estimated "DI_APP_USER"."POST_MIGR_ERROR_TABLE_TEMP"   1024 KB
+.  estimated "DI_APP_USER"."T1"                           1024 KB
+.  estimated "DI_APP_USER"."DI_PRIIPS_DATA_TEMP"             0 KB
+.  estimated "DI_APP_USER"."DI_PRIIPS_FOF_POS_TEMP"          0 KB
+.  estimated "DI_APP_USER"."DI_PRIIPS_NAVPRICES_POS_TEMP"      0 KB
+.  estimated "DI_APP_USER"."DI_PURGE_LOG_201903A"            0 KB
+.  estimated "DI_APP_USER"."PRIIPS_NAVPRICE_POSMAIN_TEMP"      0 KB
+Total estimation using BLOCKS method: 1.130 GB
+Job "SYS"."SYS_EXPORT_SCHEMA_01" successfully completed at Fri Aug 25 10:21:22 2023 elapsed 0 00:00:19
+
+Above output give us the total disk size that it needs to store dump file is 1.130 GB, So make sure you have more than estimated disk space in the directory name "FTS" location path (/acfs02/oracle/refresh/FTS)
+
+Step 5.
+
+So to check for disk space under /acfs02 mount path, use below command.
+df -h /acfs02
+
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/asm/acfsvol02-72   12T  2.5T  9.6T  21% /acfs02
+
+Check for Avail, here it is 9.6 TB available. We only need 1.13 GB, so we are good here to go ahead with actual export.
+
+Step 6.
+
+#Create Export par file for actual export
+
+vi SCHEMA_EXP.par
+DIRECTORY=FTS
+DUMPFILE=SCHEMA_EXP_%U.dmp
+LOGFILE=SCHEMA_EXP.log
+PARALLEL=1
+SCHEMAS=DI_APP_USER
+
+
+expdp userid=\'/ as sysdba\' parfile=SCHEMA_EXP.par
+
+Once export is done, check for error messages, clarify with your team if some of the error messages are unknow.
+
+Step 7.
+
+If the export is good, move the dump files to non-prod database directory name path, for that you need to repeat step2 to know the location of directory path, run below query.
+
+col OWNER for a20
+col DIRECTORY_NAME for a20
+col DIRECTORY_PATH for a72
+set linesize 250
+select * from dba_directories;
+
+Choose a directory path where you generally use for import, if unknow you can choose any directory which have enough disk space, for disk space again check it on OS level using df -h command.
+
+Step 8.
+Before importing schema, if it is a refresh from prod to non-prod, then from non-prod you need to drop the schemas that you want to import, use below command as sysdba to drop the schema, make sure no connections to this database schema, check it in OEM or using a sql query. If connections exist ask users to disconnect or you can kill them if you already have an outage window. 
+
+drop user schema_name cascade;
+
+
+Step 9.
+#Create import par file, as below
+
+vi SCHEMA_IMP.par
+DIRECTORY=<GET DIRECTORY NAME FROM STEP 7>
+DUMPFILE=SCHEMA_EXP_%U.dmp
+LOGFILE=SCHEMA_IMP.log
+PARALLEL=1
+SCHEMAS=DI_APP_USER
+
+Here, if you need to imprt multiple schemas, then add them as SCHEMAS=SCHEMA1,SCHEMA2,SCHEMA3
+
+Step 9.
+Review the import log for any errors and discuss with your team for clarification.
+
+
