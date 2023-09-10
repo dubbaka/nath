@@ -4,7 +4,7 @@
 <head>
   <meta charset='Cp1252'>
   
-  <title>Gen1 Database Details</title>
+  <title>Application Details</title>
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -70,9 +70,9 @@
     /*
     Label the data
     */
-td:nth-of-type(2):before { content: "APPLICATION"; }
-td:nth-of-type(3):before { content: "CONFIGURATION ITEM"; }
-td:nth-of-type(1):before { content: "HOSTNAME"; }
+td:nth-of-type(1):before { content: "APPLICATION"; }
+td:nth-of-type(2):before { content: "CONFIGURATION ITEM"; }
+td:nth-of-type(3):before { content: "HOSTNAME"; }
 td:nth-of-type(4):before { content: "COMMENTS"; }
   }
   
@@ -124,7 +124,7 @@ function delayedSearch() {
 </head>
 
 <body>
-<div id="search-box"><input type="text" size="30" maxlength="1000" value="" id="search" onkeyup="delayedSearch();" /><input type="button" value="Go" onclick="lsearch();"/> </div><br></br>
+<div id="search-box"><input type="text" size="30" maxlength="1000" value="" id="search" onkeyup="delayedSearch();" /> <input type="button" value="  Go  " onclick="lsearch();"/> </div><br></br>
 <table><thead><tr>	
 	<th>APPLICATION</th>
 	<th>CONFIGURATION ITEM</th>
