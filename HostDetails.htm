@@ -139,25 +139,12 @@ function delayedSearch() {
 <td><pre><br>PUTTY :<a href="ssh://a578431@NEBULA/">NEBULA</a> <a href="ssh://a578431@ALTAIR/">ALTAIR</a><br><br>WINSCP:<a href="winscp-sftp://a578431@NEBULA/">NEBULA</a> <a href="winscp-sftp://a578431@ALTAIR/">ALTAIR</a><br></pre></td>
 <td><pre>None</pre></td>
 	</tr>
+	
 	<tr>
 <td><pre>IFEEDS</pre></td>
 <td><pre>AP1116</pre></td>
 <td><pre><br>PUTTY :<a href="ssh://a578431@ALTAIR/">ALTAIR</a> <br><br>WINSCP:<a href="winscp-sftp://a578431@ALTAIR/">ALTAIR</a> <br></pre></td>
 <td><pre>None</pre></td>
 	</tr>
-</tbody></table><!-- SQL:
-SELECT 
-  '<pre>'||t.clustername||'</pre>' as clustername,
-  '<pre>PUTTY :<a href="ssh://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 1)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 1)||'</a> <a href="ssh://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 2)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 2)||'</a> <a href="ssh://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 3)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 3)||'</a> <a href="ssh://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 4)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 4)||'</a> <br><br>WINSCP:<a href="winscp-sftp://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 1)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 1)||'</a> <a href="winscp-sftp://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 2)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 2)||'</a> <a href="winscp-sftp://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 3)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 3)||'</a> <a href="winscp-sftp://smulugu1%40pmdbma05%40'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 4)||'@psmpprod.corp.frk.com/">'||REGEXP_SUBSTR(t.hostname, '[^ ]+', 1, 4)||'</a></pre>' INSTANCE_HOSTS, 
-  '<pre>'||t.cdbname||'</pre>' as cdbname,
-  '<pre>'||t.pdbname||'</pre>' as pdbname,
-  '<pre>'||t.env||'</pre>' as env,
-  '<pre>'||t.remarks||'</pre>' as remarks,
-  '<pre>'||t.inc_count||'</pre>' as count,
-  '<pre>'||t.version||'</pre>' as version,
-  '<pre>'||t.scan_name||'</pre>' as scan_name,
-  '<pre>'||t.db_ports||'</pre>' as db_ports,
-  '<pre>'||t.services||'</pre>' as services
-FROM gen1_database t 
-order by t.env
-desc--></body></html>
+	
+</tbody></table></body></html>
