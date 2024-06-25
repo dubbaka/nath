@@ -26,7 +26,7 @@ export last_node_db_names
 SCRIPT_DIR=/acfs02/oracle/nath/scripts/testing
 LOG_DIR=$SCRIPT_DIR/log
 
-DBA="ranganath.dubbaka@franklintempleton.com"
+DBA="ranganath.dubbaka@gmail.com"
 
 # Capturing cluster node names.
 cluster_nodes=$(ps -ef | grep tnslsnr | grep ASM | awk '{ print $8 }' | sed 's/tnslsnr/olsnodes/')
