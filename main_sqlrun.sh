@@ -10,9 +10,9 @@ echo "Please follow below paterns to make this script work"
 echo "sh dba_runsql.sh ts.sql ALLCDBS	=> (this is to execute script on all CDB's with in cluster nodes)"
 echo "sh dba_runsql.sh ts.sql ALLPDBS	=> (this is to execute script on all PDB's of all CDB's with in cluster nodes)"
 echo "sh dba_runsql.sh ts.sql ALL		=> (this is to execute script on all CDB's and all of it PDBS's with in cluster nodes)"
-echo "sh dba_runsql.sh ts.sql FONDCON CDBONLY	 => (this is to execute script on specific CDB with in cluster nodes)"
-echo "sh dba_runsql.sh ts.sql FONDCON WIZPRO	 => (this is to execute script on specific PDB with in cluster nodes)"
-echo "sh dba_runsql.sh ts.sql FONDCON ALLPDBS	 => (this is to execute script on specific CDB's all of its PDBS with in cluster nodes)"
+echo "sh dba_runsql.sh ts.sql CDBNAME CDBONLY	 => (this is to execute script on specific CDB with in cluster nodes)"
+echo "sh dba_runsql.sh ts.sql CDBNAME PDBNAME	 => (this is to execute script on specific PDB with in cluster nodes)"
+echo "sh dba_runsql.sh ts.sql CDBNAME ALLPDBS	 => (this is to execute script on specific CDB's all of its PDBS with in cluster nodes)"
 exit 1
 fi
 
