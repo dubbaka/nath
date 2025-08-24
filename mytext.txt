@@ -3,6 +3,7 @@ This repository is to test all the projects, this page will list all the ongoing
 Open Projects:
 --------------
 => Oracle DBA bau tasks using ansible playbooks.
+=> DevOps Tasks
 
 
 
