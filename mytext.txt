@@ -5,6 +5,8 @@ Open Projects:
 => Oracle DBA bau tasks using ansible playbooks.
 => DevOps Tasks & Learning
 
+qrfx llsb lddm pwab
+
 
 
 
