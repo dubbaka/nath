@@ -1,1 +1,1 @@
-echo "This out put is from Github file"
+ech "This out put is from Github file"
